@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8f7fc">
+  <meta name="description" content="A friendly, customizable math practice space. Start with trig derivatives and their reverse antiderivatives.">
+  <title>Math Practice — Trig Derivatives & Antiderivatives</title>
+  <style>
+    :root{--primary:#ad14d7;--secondary:#168b91;--accent:#edb842;--on-primary:#fff;--on-secondary:#fff;--on-accent:#1e2432;--primary-soft:#f3e0f9;--secondary-soft:#daf1f0;--bg:#f8f7fc;--card:#fff;--card-2:#f2f0f8;--text:#26253b;--muted:#6f6c82;--line:#e2deeb;--shadow:0 12px 35px rgba(51,36,84,.06);--success:#16835d;--danger:#b83d62;--radius:18px}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;line-height:1.48;min-height:100vh;transition:background .2s,color .2s}
+    button,input,select{font:inherit}
+    button{cursor:pointer}
+    button:disabled{cursor:not-allowed;opacity:.5}
+    button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+    .shell{max-width:1050px;margin:auto;padding:20px clamp(14px,4vw,38px) 75px}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:11px;cursor:pointer}
+    .brand-mark{display:grid;place-items:center;width:45px;height:45px;border-radius:14px;background:var(--primary);color:var(--on-primary);font-family:Georgia,serif;font-weight:800;font-size:27px;transform:rotate(-5deg);box-shadow:0 6px 0 var(--primary-soft)}
+    .brand-name{font-size:clamp(19px,2.4vw,24px);font-weight:850;letter-spacing:-.04em;line-height:1.12}
+    .brand-sub{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.025em;margin-top:3px}
+    .header-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{border:1px solid var(--line);background:var(--card);color:var(--text);width:43px;height:43px;display:grid;place-items:center;border-radius:13px;font-size:20px;box-shadow:var(--shadow)}
+    .icon-btn:hover,.ghost:hover,.topic-card:hover,.activity-card:hover{border-color:var(--primary)}
+    .hero{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:clamp(22px,4vw,42px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;right:-95px;top:-95px;width:280px;height:280px;border-radius:50%;background:var(--primary-soft);opacity:.65}
+    .hero:after{content:"✳";position:absolute;right:44px;top:30px;font-size:65px;color:var(--primary);opacity:.2;transform:rotate(20deg)}
+    .hero>*{position:relative;z-index:1}
+    h1,h2,h3,p{margin:0}
+    h1{font-size:clamp(29px,5.5vw,49px);letter-spacing:-.055em;line-height:1.11;margin:10px 0 12px;max-width:680px}
+    h2{font-size:clamp(22px,3.8vw,29px);letter-spacing:-.035em;line-height:1.2}
+    h3{font-size:18px;letter-spacing:-.02em}
+    .lead{font-size:clamp(15px,2.2vw,17px);color:var(--muted);max-width:630px}
+    .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--primary);font-weight:850}
+    .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .row-between{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .section-head{margin:28px 0 14px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:11px 19px;border-radius:13px;font-weight:750;border:1px solid transparent;transition:transform .12s,opacity .12s,background .12s;text-align:center}
+    .btn:active{transform:scale(.98)}
+    .primary{background:var(--primary);color:var(--on-primary)}
+    .secondary{background:var(--secondary);color:var(--on-secondary)}
+    .ghost{background:var(--card);color:var(--text);border-color:var(--line)}
+    .soft{background:var(--primary-soft);color:var(--text)}
+    .small{font-size:13px;padding:8px 12px;min-height:37px;border-radius:10px}
+    .full{width:100%}
+    .pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:var(--primary-soft);color:var(--text);font-weight:750;font-size:11px;letter-spacing:.025em;padding:6px 10px}
+    .pill.green{background:var(--secondary-soft)}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(16px,2.6vw,24px);box-shadow:var(--shadow)}
+    .muted{color:var(--muted)}.tiny{font-size:12px}.sm{font-size:14px}.strong{font-weight:750}
+    .topic-card{display:flex;gap:16px;align-items:center;text-align:left;width:100%;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);color:var(--text)}
+    .topic-icon{width:64px;height:64px;flex:0 0 auto;display:grid;place-items:center;border-radius:18px;background:var(--primary-soft);font-family:Georgia,serif;font-size:29px;color:var(--primary)}
+    .activity-card{display:flex;flex-direction:column;align-items:flex-start;gap:12px;width:100%;height:100%;text-align:left;padding:20px;border:1px solid var(--line);border-radius:19px;background:var(--card);color:var(--text);box-shadow:var(--shadow)}
+    .activity-icon{width:46px;height:46px;border-radius:13px;background:var(--primary-soft);display:grid;place-items:center;font-size:22px}
+    .activity-card:nth-child(2) .activity-icon,.activity-card:nth-child(5) .activity-icon{background:var(--secondary-soft)}
+    .activity-card:nth-child(3) .activity-icon{background:#fff0c3;color:#603f00}
+    .activity-card .muted{font-size:13px;min-height:39px}
+    .tabs{display:flex;gap:7px;overflow-x:auto;padding:5px 0;margin:20px 0 20px;scrollbar-width:thin}
+    .tab{white-space:nowrap;min-height:42px;padding:9px 15px;background:var(--card);color:var(--muted);border:1px solid var(--line);border-radius:12px;font-weight:750}
+    .tab.active{background:var(--primary);color:var(--on-primary);border-color:transparent}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .form-field{display:grid;gap:9px}
+    .field-label{font-size:13px;font-weight:780;color:var(--text)}
+    .segmented{display:flex;gap:5px;flex-wrap:wrap;padding:5px;border-radius:13px;background:var(--card-2);border:1px solid var(--line)}
+    .seg{min-height:39px;flex:1;background:transparent;color:var(--muted);border:0;border-radius:9px;padding:8px 11px;white-space:nowrap;font-size:13px;font-weight:700}
+    .seg.active{background:var(--card);color:var(--text);box-shadow:0 3px 12px rgba(0,0,0,.07)}
+    .checks{display:flex;gap:8px;flex-wrap:wrap}
+    .checkchip{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:7px 11px;border-radius:11px;background:var(--card-2);color:var(--text);border:1px solid var(--line);font-size:14px;font-weight:700;cursor:pointer}
+    .checkchip:has(input:checked){border-color:var(--primary);background:var(--primary-soft)}
+    .checkchip input{accent-color:var(--primary);width:16px;height:16px;margin:0}
+    .notice{padding:12px 14px;border:1px solid var(--line);background:var(--card-2);border-radius:13px;color:var(--muted);font-size:13px}
+    .play-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+    .prompt-card{text-align:center;padding:clamp(22px,4vw,37px) 14px;border-radius:20px;background:var(--card-2);border:1px solid var(--line);min-height:168px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px}
+    .math-display{width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;text-align:center;padding:2px 0;scrollbar-width:thin}
+    .math-display math{font-size:clamp(25px,4.6vw,37px);font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre",serif;color:var(--text)}
+    .math-inline{display:inline-flex;justify-content:center;align-items:center;max-width:100%;overflow-x:auto;vertical-align:middle}
+    .math-inline math{font-size:clamp(18px,3.2vw,24px);font-family:"Cambria Math","STIX Two Math","DejaVu Math TeX Gyre",serif;color:inherit}
+    .answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:17px}
+    .answer{min-height:77px;background:var(--card);color:var(--text);border:1.5px solid var(--line);border-radius:15px;padding:12px 6px;display:flex;align-items:center;justify-content:center;gap:8px;min-width:0}
+    .answer:hover:not(:disabled){border-color:var(--primary);background:var(--primary-soft)}
+    .answer.right{border-color:var(--success);background:rgba(22,131,93,.09)}
+    .answer.wrong{border-color:var(--danger);background:rgba(184,61,98,.08)}
+    .answer:disabled{opacity:1}
+    .feedback{border-radius:15px;padding:17px;margin-top:17px;border:1px solid var(--line);background:var(--card-2)}
+    .feedback.good{border-color:var(--success);background:rgba(22,131,93,.07)}
+    .feedback.bad{border-color:var(--danger);background:rgba(184,61,98,.055)}
+    .feedback-title{font-weight:820;margin-bottom:6px}
+    .reveal{padding:20px 15px;background:var(--card);border:1px dashed var(--primary);border-radius:16px;text-align:center;margin-top:15px}
+    .tile-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:14px}
+    .tile{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;min-height:52px;font-weight:750;font-family:Georgia,serif;font-size:18px}
+    .tile:hover{background:var(--primary-soft);border-color:var(--primary)}
+    .build-answer{min-height:80px;border:2px dashed var(--line);background:var(--card-2);border-radius:15px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:12px;margin-top:16px}
+    .build-token{border-radius:9px;padding:8px 11px;background:var(--primary-soft);font-family:Georgia,serif;font-size:18px}
+    .match-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:19px 0}
+    .match-card{min-height:112px;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:15px;background:var(--card);color:var(--text);padding:7px;text-align:center;overflow:hidden}
+    .match-card.hidden-face{background:var(--primary-soft);color:var(--primary);font-size:27px;font-weight:900}
+    .match-card.found{border-color:var(--success);background:rgba(22,131,93,.07)}
+    .match-card .math-inline math{font-size:clamp(15px,2.4vw,20px)}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .stat{background:var(--card-2);padding:17px;border-radius:15px}
+    .stat-num{font-size:clamp(22px,3.5vw,29px);font-weight:850;letter-spacing:-.045em;line-height:1.25}
+    .stat-name{font-size:12px;color:var(--muted);margin-top:3px}
+    .skill-row{display:grid;grid-template-columns:100px 1fr 52px;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+    .bar{height:9px;background:var(--card-2);overflow:hidden;border-radius:99px}
+    .bar > div{height:100%;border-radius:99px;background:var(--primary)}
+    .reference-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .reference-card{border:1px solid var(--line);border-radius:15px;padding:16px;background:var(--card-2);overflow:hidden}
+    .reference-card .math-inline math{font-size:clamp(16px,2.3vw,22px)}
+    .setting-section{padding:22px 0;border-bottom:1px solid var(--line)}
+    .setting-section:first-child{padding-top:0}.setting-section:last-child{border-bottom:0;padding-bottom:0}
+    .palette-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .palette-btn{text-align:left;background:var(--card);color:var(--text);border:1.5px solid var(--line);border-radius:13px;padding:12px;min-height:94px}
+    .palette-btn.selected{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+    .swatches{display:flex;gap:3px;margin-bottom:9px}.swatches span{height:23px;flex:1;border-radius:5px}
+    .color-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0}
+    input[type=color]{width:54px;height:37px;background:transparent;border:0;padding:2px;cursor:pointer}
+    input[type=number],select{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:11px;padding:11px;min-height:43px;max-width:100%}
+    .quiz-progress{height:8px;background:var(--card-2);border-radius:99px;overflow:hidden;margin:12px 0 22px}.quiz-progress>div{height:100%;background:var(--secondary);border-radius:99px}
+    .quiz-review{display:grid;gap:8px;margin-top:14px}.review-item{border:1px solid var(--line);background:var(--card-2);border-radius:12px;padding:14px}
+    .footer{font-size:12px;color:var(--muted);margin-top:35px;text-align:center}
+    .footer a{color:inherit}
+    .hide{display:none!important}
+    @media(max-width:750px){.form-grid{grid-template-columns:1fr}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.reference-grid{grid-template-columns:1fr}.palette-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topic-card{padding:16px}.topic-icon{width:53px;height:53px;font-size:24px}}
+    @media(max-width:460px){.shell{padding:14px 13px 55px}.header{margin-bottom:19px}.brand-mark{height:40px;width:40px;font-size:24px}.brand-name{font-size:19px}.brand-sub{font-size:10px}.header-actions{gap:6px}.icon-btn{width:39px;height:39px}.hero{padding:24px 19px}.grid3{grid-template-columns:1fr 1fr;gap:9px}.activity-card{padding:14px;gap:9px}.activity-card h3{font-size:15px}.activity-card .muted{font-size:12px}.activity-icon{width:40px;height:40px}.math-display math{font-size:27px}.answer-grid{gap:8px}.answer{min-height:72px;padding:8px 4px}.answer .math-inline math{font-size:17px}.tile-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.match-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.match-card{min-height:99px}.match-card .math-inline math{font-size:15px}.stats-grid{gap:7px}.stat{padding:12px 8px}.stat-name{font-size:10px}.skill-row{grid-template-columns:66px 1fr 40px;gap:8px}.palette-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <input id="import-file" type="file" accept="application/json,.json" hidden>
+  <script>
+  (()=>{
+    'use strict';
+    const STORE='math-practice-kp-v1';
+    const MATH_NS='http://www.w3.org/1998/Math/MathML';
+    const NAMES=['sin','cos','tan','cot','sec','csc'];
+    const RULES=[
+      {id:'sin',name:'Sine',der:['cos'],ant:['sin','+ C'],tip:'Sine and cosine are partners. The derivative of sine is positive cosine.'},
+      {id:'cos',name:'Cosine',der:['−','sin'],ant:['cos','+ C'],tip:'Cosine is one of the three negative trig derivatives: cosine, cotangent, cosecant.'},
+      {id:'tan',name:'Tangent',der:['sec','²'],ant:['tan','+ C'],tip:'Tangent gives secant squared. That square is doing important work.'},
+      {id:'cot',name:'Cotangent',der:['−','csc','²'],ant:['cot','+ C'],tip:'Cotangent gives negative cosecant squared. Remember both the minus and the square.'},
+      {id:'sec',name:'Secant',der:['sec','tan'],ant:['sec','+ C'],tip:'Secant travels with tangent: sec(x)tan(x). No square this time.'},
+      {id:'csc',name:'Cosecant',der:['−','csc','cot'],ant:['csc','+ C'],tip:'Cosecant travels with cotangent and has a negative sign.'}
+    ];
+    const PALETTES={
+      pop:['#ad14d7','#168b91','#edb842'],
+      candy:['#ca5baf','#4aaba3','#f2af62'],
+      ocean:['#217fbc','#169c94','#efaf51'],
+      sunset:['#e96c73','#8865c7','#e2a638'],
+      violet:['#7653ca','#3e9db2','#f29a65'],
+      lime:['#357a65','#7761a7','#d5aa30']
+    };
+    const defaultData=()=>({version:1,theme:{mode:'light',palette:'pop',colors:[...PALETTES.pop]},prefs:{operation:'both',selection:'smart',functions:[...NAMES],playful:true},skills:{},total:{attempts:0,correct:0,bestStreak:0},today:{date:dayKey(),attempts:0,correct:0},quizHistory:[]});
+    let storageOK=true;
+    let data;
+    try{const raw=localStorage.getItem(STORE);data=raw?mergeStored(JSON.parse(raw)):defaultData()}catch(e){data=defaultData();storageOK=false}
+    let ui={screen:'home',tab:'practice',game:'mc',playing:false,question:null,options:[],selected:null,feedback:null,hint:false,firstAttempt:false,build:[],streak:0,lastIds:[],quiz:null,quizFormat:'mixed',quizLength:12,quizSelection:'balanced',quizFinished:false,flashRevealed:false,match:null,glitch:null,settingsTab:'appearance',notice:''};
+    const $=id=>document.getElementById(id);
+    function dayKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+    function mergeStored(x){const base=defaultData();if(!x||typeof x!=='object'||x.version!==1) return base; const validNames=Array.isArray(x.prefs?.functions)?x.prefs.functions.filter(n=>NAMES.includes(n)):base.prefs.functions;return {...base,theme:{...base.theme,...x.theme,colors:Array.isArray(x.theme?.colors)&&x.theme.colors.length===3?x.theme.colors:base.theme.colors},prefs:{...base.prefs,...x.prefs,functions:validNames},skills:typeof x.skills==='object'&&x.skills?x.skills:{},total:{...base.total,...x.total},today:{...base.today,...x.today},quizHistory:Array.isArray(x.quizHistory)?x.quizHistory.slice(-35):[]}}
+    function save(){try{localStorage.setItem(STORE,JSON.stringify(data));storageOK=true}catch(e){storageOK=false}}
+    function today(){if(data.today.date!==dayKey()){data.today={date:dayKey(),attempts:0,correct:0};save()}}
+    today();
+    function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+    function choice(a){return a[Math.floor(Math.random()*a.length)]}
+    function pct(a,b){return b?Math.round(100*a/b):0}
+    function skill(id){return data.skills[id]||{attempts:0,correct:0,recent:[],assisted:0}}
+    function mastery(id){const s=skill(id);if(!s.attempts)return null;const recent=Array.isArray(s.recent)?s.recent:[];return Math.round(100*(recent.reduce((a,v)=>a+Number(v||0),0)/Math.max(recent.length,1)))}
+    function record(id,correct,assisted=false){const s=skill(id);s.attempts++;if(correct&&!assisted)s.correct++;if(assisted)s.assisted=(s.assisted||0)+1;s.recent=(Array.isArray(s.recent)?s.recent:[]).concat(correct?(assisted?.5:1):0).slice(-10);data.skills[id]=s;data.total.attempts++;data.total.correct+=correct&&!assisted?1:0;data.today.attempts++;data.today.correct+=correct&&!assisted?1:0;ui.streak=correct&&!assisted?ui.streak+1:0;data.total.bestStreak=Math.max(data.total.bestStreak,ui.streak);save()}
+    function selectedIds(){const ops=data.prefs.operation==='both'?['d','a']:[data.prefs.operation==='derivatives'?'d':'a'];return RULES.filter(r=>data.prefs.functions.includes(r.id)).flatMap(r=>ops.map(op=>op+'-'+r.id))}
+    function makeQ(id){const [op,name]=id.split('-');const rule=RULES.find(r=>r.id===name);return {id,op,rule,tokens:op==='d'?rule.der:rule.ant}}
+    function chooseQ(ids,kind=data.prefs.selection){if(!ids.length)return null;const possible=ids.length>2?ids.filter(id=>!ui.lastIds.slice(-2).includes(id)):ids;let pool=possible.length?possible:ids;let id;
+      if(kind==='balanced'){id=choice(pool)}else{const weights=pool.map(k=>{const s=skill(k),m=mastery(k);if(kind==='weak')return s.attempts<2?2.5:Math.max(.15,4-(m||0)/26);return s.attempts<3?2.4:Math.max(.75,3.6-(m||0)/34)});let n=Math.random()*weights.reduce((a,b)=>a+b,0);id=pool.find((v,i)=>(n-=weights[i])<=0)||pool[pool.length-1]}
+      ui.lastIds.push(id);ui.lastIds=ui.lastIds.slice(-6);return makeQ(id)}
+    function tokensKey(t){return t.join('|')}
+    function makeOptions(q,n=4){const seen=new Set([tokensKey(q.tokens)]);let pool=shuffle(RULES.flatMap(r=>['d','a'].map(op=>makeQ(op+'-'+r.id)).filter(qq=>qq.op===q.op&&qq.id!==q.id)));const others=[];for(const item of pool){const k=tokensKey(item.tokens);if(!seen.has(k)){seen.add(k);others.push(item.tokens)}if(others.length>=n-1)break}return shuffle([q.tokens,...others])}
+    function mi(s){return '<mi>'+s+'</mi>'}
+    function fn(n){return '<mrow><mi mathvariant="normal">'+n+'</mi><mo>&#x2061;</mo><mo>(</mo><mi>x</mi><mo>)</mo></mrow>'}
+    function expr(tokens){let negative=tokens[0]==='−',parts=[],plusC=false;for(const t of tokens){if(t==='−')continue;if(t==='+ C'){plusC=true;continue}if(t==='²'){if(parts.length)parts[parts.length-1]='<msup>'+parts[parts.length-1]+'<mn>2</mn></msup>';continue}if(NAMES.includes(t))parts.push(fn(t))}
+      const part=parts.join('<mspace width=".16em"/>')||'<mo>?</mo>';return '<mrow>'+(negative?'<mo>−</mo>':'')+part+(plusC?'<mo>+</mo><mi>C</mi>':'')+'</mrow>'}
+    function prompt(q){return q.op==='d'?'<mrow><mfrac><mi mathvariant="normal">d</mi><mrow><mi mathvariant="normal">d</mi><mi>x</mi></mrow></mfrac><mo>[</mo>'+fn(q.rule.id)+'<mo>]</mo></mrow>':'<mrow><mo largeop="true">∫</mo>'+expr(q.rule.der)+'<mspace width=".16em"/><mi mathvariant="normal">d</mi><mi>x</mi></mrow>'}
+    function math(m,inline=false){return '<span class="'+(inline?'math-inline':'math-display')+'"><math xmlns="'+MATH_NS+'" display="'+(inline?'inline':'block')+'">'+m+'</math></span>'}
+    function expressionHTML(t,inline=true){return math(expr(t),inline)}
+    function fullEquation(q){return math('<mrow>'+prompt(q)+'<mo>=</mo>'+expr(q.tokens)+'</mrow>',true)}
+    function styleContrast(hex){if(!/^#[0-9a-f]{6}$/i.test(hex))return '#fff';const a=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255).map(v=>v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4));return a[0]*.2126+a[1]*.7152+a[2]*.0722>.29?'#202035':'#ffffff'}
+    function rgba(hex,alpha){const m=/^#([\da-f]{6})$/i.exec(hex);if(!m)return 'rgba(173,20,215,.1)';let v=m[1];return 'rgba('+[0,2,4].map(i=>parseInt(v.slice(i,i+2),16)).join(',')+','+alpha+')'}
+    function applyTheme(){const root=document.documentElement;let dark=data.theme.mode==='dark';let colors=data.theme.colors;if(!Array.isArray(colors)||colors.length!==3)colors=[...PALETTES.pop];const [p,s,a]=colors;root.style.setProperty('--primary',p);root.style.setProperty('--secondary',s);root.style.setProperty('--accent',a);root.style.setProperty('--on-primary',styleContrast(p));root.style.setProperty('--on-secondary',styleContrast(s));root.style.setProperty('--on-accent',styleContrast(a));root.style.setProperty('--primary-soft',rgba(p,dark?.23:.12));root.style.setProperty('--secondary-soft',rgba(s,dark?.2:.12));const vars=dark?{'--bg':'#151827','--card':'#202437','--card-2':'#2b3046','--text':'#f5f3fb','--muted':'#b5b8ca','--line':'#3d4359','--shadow':'0 12px 36px rgba(0,0,0,.12)'}:{'--bg':'#f8f7fc','--card':'#ffffff','--card-2':'#f2f0f8','--text':'#26253b','--muted':'#6f6c82','--line':'#e2deeb','--shadow':'0 12px 35px rgba(51,36,84,.06)'};for(const [k,v] of Object.entries(vars))root.style.setProperty(k,v);document.querySelector('meta[name="theme-color"]').content=dark?'#151827':'#f8f7fc'}
+    function button(label,action,cls='ghost',extra=''){return '<button type="button" class="btn '+cls+'" data-action="'+action+'" '+extra+'>'+label+'</button>'}
+    function header(){return '<header class="header"><div class="brand" data-action="home" role="button" tabindex="0" aria-label="Go to homepage"><div class="brand-mark">∑</div><div><div class="brand-name">Math Practice</div><div class="brand-sub">A little practice. A lot less panic.</div></div></div><div class="header-actions"><button class="icon-btn" data-action="theme-toggle" aria-label="Switch to '+(data.theme.mode==='light'?'dark':'light')+' mode" title="Light / dark">'+(data.theme.mode==='light'?'☾':'☀')+'</button><button class="icon-btn" data-action="settings" aria-label="Settings" title="Settings">⚙</button></div></header>'}
+    function footer(){return '<footer class="footer">Your progress stays in this browser. No account, no drama. <button class="btn small ghost" data-action="about" style="min-height:29px;padding:4px 9px;margin-left:5px">About</button></footer>'}
+    function home(){const t=data.today;return '<section class="hero"><div class="eyebrow">Interactive study, minus the busywork</div><h1>Math practice that actually feels doable.</h1><p class="lead">Start with trig derivatives and antiderivatives. More topics can join the party later.</p><div class="row" style="margin-top:21px">'+button('Start practicing →','open-module','primary')+button('View my progress','go-progress','ghost')+'</div></section><div class="section-head row-between"><h2>Pick a topic</h2><span class="pill green">1 ready to play</span></div><button class="topic-card" data-action="open-module"><span class="topic-icon">f′</span><span style="flex:1"><strong style="font-size:20px;letter-spacing:-.02em">Trig derivatives & antiderivatives</strong><span class="muted sm" style="display:block;margin-top:5px">Flashcards, multiple choice, build-the-formula, matching, and mistake spotting.</span></span><span style="font-size:24px;color:var(--primary)">→</span></button><div class="section-head"><h2>Your practice at a glance</h2></div><div class="panel"><div class="stats-grid"><div class="stat"><div class="stat-num">'+t.attempts+'</div><div class="stat-name">Questions today</div></div><div class="stat"><div class="stat-num">'+(t.attempts?pct(t.correct,t.attempts)+'%':'—')+'</div><div class="stat-name">Today’s accuracy</div></div><div class="stat"><div class="stat-num">'+data.total.bestStreak+'</div><div class="stat-name">Best streak</div></div></div><p class="muted tiny" style="margin-top:13px">Progress saves automatically here. It won’t sync to another browser or device.</p></div>'}
+    function tabs(){return '<nav class="tabs" aria-label="Trig practice sections">'+[['practice','Practice'],['quiz','Quiz'],['progress','Progress'],['reference','Rule sheet']].map(([id,label])=>'<button class="tab '+(ui.tab===id?'active':'')+'" data-action="tab" data-value="'+id+'">'+label+'</button>').join('')+'</nav>'}
+    function selector(label,opts,value,action){return '<div class="form-field"><div class="field-label">'+label+'</div><div class="segmented">'+opts.map(([v,l])=>'<button type="button" class="seg '+(value===v?'active':'')+'" data-action="'+action+'" data-value="'+v+'">'+l+'</button>').join('')+'</div></div>'}
+    function filters(){return '<div class="panel" style="margin-bottom:18px"><div class="row-between" style="margin-bottom:16px"><h3>What should we work on?</h3><span class="pill">Your choice</span></div><div class="form-grid">'+selector('Question direction',[['derivatives','Derivatives'],['antiderivatives','Antiderivatives'],['both','Both']],data.prefs.operation,'operation')+selector('Question mix',[['smart','Smart'],['balanced','Even'],['weak','Weak spots']],data.prefs.selection,'selection')+'</div><div style="margin-top:17px"><div class="row-between" style="margin-bottom:9px"><div class="field-label">Include these trig rule families</div><button class="btn small ghost" data-action="select-all">'+(data.prefs.functions.length===6?'Clear':'Select all')+'</button></div><div class="checks">'+RULES.map(r=>'<label class="checkchip"><input type="checkbox" data-function="'+r.id+'" '+(data.prefs.functions.includes(r.id)?'checked':'')+'>'+r.name+'</label>').join('')+'</div></div><p class="muted tiny" style="margin-top:13px">For antiderivatives, we practice reversing the six basic trig derivative rules. And yes, the + C matters.</p></div>'}
+    const GAME_INFO={flash:['◫','Flip & learn','See a rule, flip to check, and tell us whether you knew it.'],mc:['✓','Quick pick','Four choices. One correct formula. You know the drill.'],build:['⊞','Build the answer','Tap symbols to assemble the complete formula.'],match:['▦','Match the pairs','Find the matching functions and expressions.'],glitch:['⌕','Spot the mistake','Decide whether a proposed formula is right, then fix it if needed.']};
+    function practice(){if(ui.playing)return play();return filters()+'<div class="row-between section-head"><h2>Choose a mini-game</h2><span class="muted sm">Endless practice. Stop whenever.</span></div><div class="grid3">'+Object.entries(GAME_INFO).map(([k,g])=>'<button class="activity-card" data-action="start-game" data-value="'+k+'"><span class="activity-icon">'+g[0]+'</span><h3>'+g[1]+'</h3><p class="muted">'+g[2]+'</p><span class="pill">Play →</span></button>').join('')+'</div>'}
+    function moduleView(){return '<div class="row-between"><div><div class="eyebrow">Calculus · Trig</div><h1 style="font-size:clamp(26px,4vw,37px);margin:7px 0 4px">Trig derivatives & antiderivatives</h1><p class="muted sm">Six derivative rules. Six reverse antiderivatives. A suspicious amount of minus signs.</p></div>'+button('← Topics','home','ghost small')+'</div>'+tabs()+(ui.tab==='practice'?practice():ui.tab==='quiz'?quizView():ui.tab==='progress'?progressView():referenceView())}
+    function nextPractice(shouldRender=true){const ids=selectedIds();if(!ids.length){ui.playing=false;ui.notice='Choose at least one trig function to practice.';render();return}ui.question=chooseQ(ids);ui.options=makeOptions(ui.question);ui.selected=null;ui.feedback=null;ui.firstAttempt=false;ui.hint=false;ui.build=[];ui.flashRevealed=false;ui.glitch=null;if(shouldRender)render()}
+    function startGame(g){if(!selectedIds().length){ui.notice='Select at least one trig function first.';render();return}ui.game=g;ui.playing=true;ui.notice='';if(g==='match'){startMatch()}else if(g==='glitch'){nextPractice(false);startGlitch()}else nextPractice()}
+    function startGlitch(){let q=ui.question;const isRight=Math.random()<.42;const wrong=shuffle(RULES.flatMap(r=>['d','a'].map(o=>makeQ(o+'-'+r.id))).filter(x=>x.op===q.op&&x.id!==q.id));ui.glitch={isRight,shown:isRight?q.tokens:wrong[0].tokens,step:1,verdict:null,options:makeOptions(q,3)};render()}
+    function nextGameQuestion(){if(ui.game==='match'){startMatch();return}const ids=selectedIds();ui.question=chooseQ(ids);ui.options=makeOptions(ui.question);ui.selected=null;ui.feedback=null;ui.firstAttempt=false;ui.hint=false;ui.build=[];ui.flashRevealed=false;if(ui.game==='glitch')startGlitch();else render()}
+    function feedbackHTML(){if(!ui.feedback)return '';const f=ui.feedback;return '<div role="status" class="feedback '+(f.ok?'good':'bad')+'"><div class="feedback-title">'+f.title+'</div><p class="sm">'+f.detail+'</p>'+(f.showAnswer?'<div style="margin-top:11px"><span class="tiny muted">Correct answer</span><div style="margin-top:4px">'+expressionHTML(ui.question.tokens)+'</div></div>':'')+'</div>'}
+    function cheerful(ok){if(!data.prefs.playful)return ok?'Correct!':'Not quite.';return choice(ok?['Look at you knowing things!','Nice. Your brain showed up today.','Correct. That was almost suspiciously smooth.','Yep! You and these formulas are getting along.']:['Not quite. These signs love causing problems.','Close! Let’s give that one another look.','A tiny math betrayal. We can fix it.','No worries. That’s literally why practice exists.'])}
+    function play(){const g=GAME_INFO[ui.game];return '<div class="play-top">'+button('← All activities','back-activities','ghost small')+'<div class="row"><span class="pill">'+g[1]+'</span><span class="pill green">🔥 '+ui.streak+' streak</span></div></div><div class="panel"><div class="row-between" style="margin-bottom:15px"><div><h2>'+g[1]+'</h2><p class="muted tiny">'+(ui.game==='match'?'Match the cards. Keep going for another board.':'No timer, no finish line. Just practice.')+'</p></div>'+button('Stats','go-progress','ghost small')+'</div>'+(ui.game==='match'?matchView():ui.game==='glitch'?glitchView():questionView())+'</div>'}
+    function questionView(){const q=ui.question;if(!q)return '';return '<div class="prompt-card"><div class="eyebrow">'+(q.op==='d'?'Find the derivative':'Find the antiderivative')+'</div>'+math(prompt(q))+'</div>'+(ui.game==='flash'?flashView():ui.game==='build'?buildView():mcView())}
+    function mcView(){return '<div class="answer-grid">'+ui.options.map((t,i)=>{const correct=tokensKey(t)===tokensKey(ui.question.tokens);let cls=ui.selected!==null?(correct?'right':ui.selected===i?'wrong':''):'';return '<button class="answer '+cls+'" data-action="mc-answer" data-value="'+i+'" '+(ui.selected!==null?'disabled':'')+'>'+expressionHTML(t)+'</button>'}).join('')+'</div>'+feedbackHTML()+(ui.selected===null?'<div class="row" style="margin-top:15px">'+button(ui.hint?'Hint shown ✓':'Need a hint?','hint','ghost small')+'</div>':button('Next question →','next','primary full','style="margin-top:15px"'))+(ui.hint&&ui.selected===null?'<p class="notice" style="margin-top:12px">💡 '+ui.question.rule.tip+'</p>':'')}
+    function flashView(){return ui.flashRevealed?'<div class="reveal"><div class="eyebrow">The answer</div><div style="margin:10px 0">'+expressionHTML(ui.question.tokens)+'</div><p class="muted sm">'+ui.question.rule.tip+'</p></div><div class="grid2" style="margin-top:15px">'+button('Need more practice','flash-again','ghost full')+button('I knew that ✓','flash-know','primary full')+'</div>':'<div class="reveal"><p class="muted sm">Try saying it out loud first. Your brain gets to do some work.</p><div style="margin-top:17px">'+button('Flip to reveal','flash-reveal','primary')+'</div></div>'}
+    function buildView(){return '<div class="build-answer" aria-label="Your constructed answer">'+(ui.build.length?ui.build.map(t=>'<span class="build-token">'+t+'</span>').join(''):'<span class="muted sm">Tap the pieces below to build your answer</span>')+'</div><div class="tile-grid">'+['−','sin','cos','tan','cot','sec','csc','²','+ C'].map(t=>'<button class="tile" data-action="build-add" data-value="'+t+'">'+t+'</button>').join('')+'</div><div class="row-between" style="margin-top:13px"><div class="row">'+button('↶ Undo','build-undo','ghost small')+button('Clear','build-clear','ghost small')+'</div>'+button('Check answer','build-check','primary',ui.build.length?'':'disabled')+'</div>'+(ui.hint?'<p class="notice" style="margin-top:13px">💡 '+ui.question.rule.tip+'</p>':'')+feedbackHTML()+'<div class="row-between" style="margin-top:15px">'+button('Hint','hint','ghost small')+(ui.feedback?button('Next question →','next','secondary'):'')+'</div>'}
+    function glitchView(){let q=ui.question,g=ui.glitch;return '<div class="prompt-card"><div class="eyebrow">The computer claims...</div>'+math('<mrow>'+prompt(q)+'<mo>=</mo>'+expr(g.shown)+'</mrow>')+'</div>'+(g.step===1?'<p class="muted sm" style="text-align:center;margin:18px 0 9px">Is that formula correct?</p><div class="grid2">'+button('✓ Looks correct','glitch-verdict','ghost full','data-value="right"')+button('✗ Something’s off','glitch-verdict','ghost full','data-value="wrong"')+'</div>':g.step===2?'<p class="muted sm" style="text-align:center;margin:18px 0 9px">Good catch. What should the answer be?</p><div class="answer-grid">'+g.options.map((t,i)=>'<button class="answer" data-action="glitch-fix" data-value="'+i+'">'+expressionHTML(t)+'</button>').join('')+'</div>':'')+feedbackHTML()+(g.step===3?button('Next one →','next','primary full','style="margin-top:16px"'):'')}
+    function startMatch(){const all=selectedIds();if(!all.length){ui.playing=false;render();return}const ids=shuffle(all).slice(0,Math.min(4,all.length));const cards=shuffle(ids.flatMap(id=>[{key:id+'-q',id,face:'q'},{key:id+'-a',id,face:'a'}]));ui.match={cards,open:[],found:[],misses:[],moves:0,waiting:false,complete:false};render()}
+    function matchView(){const m=ui.match;return '<div class="row-between"><p class="muted sm">'+m.found.length+' / '+(m.cards.length/2)+' pairs · '+m.moves+' tries</p><span class="pill">Tap two cards</span></div><div class="match-grid">'+m.cards.map((c,i)=>{const open=m.open.includes(i)||m.found.includes(c.id);const q=makeQ(c.id);return '<button class="match-card '+(open?'':'hidden-face')+' '+(m.found.includes(c.id)?'found':'')+'" data-action="match-card" data-value="'+i+'" '+(m.found.includes(c.id)||m.waiting?'disabled':'')+' aria-label="'+(open?'Math card':'Hidden card '+(i+1))+'">'+(open?(c.face==='q'?math(prompt(q),true):expressionHTML(q.tokens)):'?')+'</button>'}).join('')+'</div>'+(m.complete?'<div class="feedback good"><div class="feedback-title">Board cleared! Nice work.</div><p class="sm">No need to stop now. Want another?</p></div>'+button('Another board →','match-new','primary full','style="margin-top:13px"'):'')}
+    function quizView(){if(ui.quizFinished)return quizResults();if(ui.quiz)return quizPlay();return '<div class="panel"><div class="eyebrow">Optional challenge</div><h2 style="margin:6px 0 9px">Make yourself a quiz</h2><p class="muted sm" style="margin-bottom:20px">A definite ending, for people who enjoy closure. Study practice can still go on forever.</p>'+filtersInnerForQuiz()+selector('How many questions?',[['6','6'],['12','12'],['24','24']],String(ui.quizLength),'quiz-length')+'<div style="height:15px"></div>'+selector('Answer format',[['mc','Multiple choice'],['build','Build it'],['mixed','Mixed']],ui.quizFormat,'quiz-format')+'<div style="height:15px"></div>'+selector('Question selection',[['balanced','Balanced'],['smart','Smart mix']],ui.quizSelection,'quiz-selection')+'<div class="notice" style="margin:17px 0">Quiz questions use your selected trig families. No hints during quizzes. You’ll get a review at the end.</div>'+button('Start '+ui.quizLength+'-question quiz →','quiz-start','primary full')+'</div>'}
+    function filtersInnerForQuiz(){return '<div style="margin-bottom:19px">'+selector('Question direction',[['derivatives','Derivatives'],['antiderivatives','Antiderivatives'],['both','Both']],data.prefs.operation,'operation')+'<div style="margin-top:14px"><div class="field-label" style="margin-bottom:8px">Include these rule families</div><div class="checks">'+RULES.map(r=>'<label class="checkchip"><input type="checkbox" data-function="'+r.id+'" '+(data.prefs.functions.includes(r.id)?'checked':'')+'>'+r.name+'</label>').join('')+'</div></div></div>'}
+    function quizPlan(){const ids=selectedIds();if(!ids.length)return [];const plan=[];if(ui.quizSelection==='balanced'){while(plan.length<ui.quizLength)plan.push(...shuffle(ids));return plan.slice(0,ui.quizLength)}for(let i=0;i<ui.quizLength;i++)plan.push(chooseQ(ids,'smart').id);return plan}
+    function startQuiz(){const plan=quizPlan();if(!plan.length){ui.notice='Please choose at least one trig function.';render();return}ui.quiz={plan,index:0,correct:0,answers:[],length:plan.length,format:ui.quizFormat};ui.quizFinished=false;quizNextQuestion()}
+    function quizNextQuestion(){if(ui.quiz.index>=ui.quiz.length){const qz=ui.quiz;data.quizHistory.push({date:dayKey(),correct:qz.correct,total:qz.length,format:qz.format});data.quizHistory=data.quizHistory.slice(-35);save();ui.quizFinished=true;render();return}const q=makeQ(ui.quiz.plan[ui.quiz.index]);ui.question=q;ui.options=makeOptions(q);ui.selected=null;ui.feedback=null;ui.build=[];render()}
+    function quizFormatHere(){return ui.quiz.format==='mixed'?(ui.quiz.index%2===0?'mc':'build'):ui.quiz.format}
+    function quizPlay(){const qz=ui.quiz,q=ui.question,format=quizFormatHere();return '<div class="panel"><div class="row-between"><div><div class="eyebrow">Quiz in progress</div><h2 style="margin-top:5px">Question '+(qz.index+1)+' of '+qz.length+'</h2></div>'+button('Leave quiz','quiz-exit','ghost small')+'</div><div class="quiz-progress"><div style="width:'+pct(qz.index,qz.length)+'%"></div></div><div class="prompt-card"><div class="eyebrow">'+(q.op==='d'?'Find the derivative':'Find the antiderivative')+'</div>'+math(prompt(q))+'</div>'+(format==='mc'?'<div class="answer-grid">'+ui.options.map((t,i)=>'<button class="answer" data-action="quiz-mc" data-value="'+i+'">'+expressionHTML(t)+'</button>').join('')+'</div>':'<div class="build-answer">'+(ui.build.length?ui.build.map(t=>'<span class="build-token">'+t+'</span>').join(''):'<span class="muted sm">Build the answer with the tiles</span>')+'</div><div class="tile-grid">'+['−','sin','cos','tan','cot','sec','csc','²','+ C'].map(t=>'<button class="tile" data-action="build-add" data-value="'+t+'">'+t+'</button>').join('')+'</div><div class="row-between" style="margin-top:13px"><div class="row">'+button('↶ Undo','build-undo','ghost small')+button('Clear','build-clear','ghost small')+'</div>'+button('Submit →','quiz-build','primary',ui.build.length?'':'disabled')+'</div>')+'<p class="muted tiny" style="margin-top:14px">No hints during the quiz. Explanations are waiting at the finish line.</p></div>'}
+    function quizAnswer(tokens){const good=tokensKey(tokens)===tokensKey(ui.question.tokens);record(ui.question.id,good,false);ui.quiz.correct+=good?1:0;ui.quiz.answers.push({id:ui.question.id,good,given:[...tokens]});ui.quiz.index++;quizNextQuestion()}
+    function quizResults(){const q=ui.quiz;return '<div class="panel"><div style="text-align:center"><div class="eyebrow">Quiz complete</div><h2 style="font-size:32px;margin:9px 0">'+(pct(q.correct,q.length)>=85?'You crushed it. Casually.':pct(q.correct,q.length)>=60?'Nice work. Keep it going.':'Still learning. That’s the whole point.')+'</h2><div style="font-size:52px;line-height:1.2;font-weight:900;color:var(--primary)">'+pct(q.correct,q.length)+'%</div><p class="muted">'+q.correct+' out of '+q.length+' correct</p></div><div class="row" style="margin:22px 0 6px;justify-content:center">'+button('Review mistakes','quiz-review-toggle','ghost')+button('New quiz →','quiz-reset','primary')+'</div><div id="quiz-review" class="quiz-review hide">'+q.answers.map((a,i)=>{const qq=makeQ(a.id);return '<div class="review-item"><div class="row-between"><span class="pill '+(a.good?'green':'')+'">Question '+(i+1)+' · '+(a.good?'Correct':'Needs work')+'</span></div><div style="margin:9px 0">'+math(prompt(qq),true)+'</div><div class="sm">Correct: '+expressionHTML(qq.tokens)+'</div>'+(a.good?'':'<div class="sm muted" style="margin-top:6px">Your answer: '+expressionHTML(a.given)+'</div><p class="muted tiny" style="margin-top:7px">'+qq.rule.tip+'</p>')+'</div>'}).join('')+'</div></div>'}
+    function progressView(){const total=data.total,t=data.today;const all=RULES.flatMap(r=>['d','a'].map(op=>({id:op+'-'+r.id,name:r.name,op})));let practiced=all.filter(x=>skill(x.id).attempts>=3),strong=practiced.filter(x=>mastery(x.id)>=80).length;return '<div class="panel"><div class="row-between"><div><h2>Your progress</h2><p class="muted sm">Built one question at a time. Very mathematical of you.</p></div>'+button('Back to games','tab','ghost small','data-value="practice"')+'</div><div class="stats-grid" style="margin:20px 0"><div class="stat"><div class="stat-num">'+total.attempts+'</div><div class="stat-name">All-time attempts</div></div><div class="stat"><div class="stat-num">'+(total.attempts?pct(total.correct,total.attempts)+'%':'—')+'</div><div class="stat-name">Unassisted accuracy</div></div><div class="stat"><div class="stat-num">'+strong+'/12</div><div class="stat-name">Strong skills</div></div></div><div class="notice">Today: '+t.attempts+' attempts · '+(t.attempts?pct(t.correct,t.attempts)+'% accuracy':'no questions yet')+' · Best streak: '+total.bestStreak+'. Hints help you learn but do not count as independent mastery.</div><h3 style="margin:23px 0 7px">Derivatives</h3>'+skillRows('d')+'<h3 style="margin:21px 0 7px">Antiderivatives</h3>'+skillRows('a')+'<h3 style="margin:24px 0 10px">Recent quizzes</h3>'+(data.quizHistory.length?'<div class="quiz-review">'+data.quizHistory.slice(-6).reverse().map(h=>'<div class="review-item row-between"><span class="sm">'+h.date+' · '+h.total+' questions</span><strong>'+h.correct+'/'+h.total+' ('+pct(h.correct,h.total)+'%)</strong></div>').join('')+'</div>':'<p class="muted sm">No quizzes yet. They’ll show up here when you try one.</p>')+'<p class="muted tiny" style="margin-top:22px">Saved in this browser on this device. It does not automatically sync with other browsers or computers. Clearing website data may erase progress.</p></div>'}
+    function skillRows(op){return RULES.map(r=>{const id=op+'-'+r.id,s=skill(id),m=mastery(id);return '<div class="skill-row"><strong class="sm">'+r.name+'</strong><div><div class="bar"><div style="width:'+(m===null?0:m)+'%;background:'+(m!==null&&m>=80?'var(--secondary)':'var(--primary)')+'"></div></div><span class="muted tiny">'+(s.attempts<3?'Getting started':'Based on recent answers')+' · '+s.attempts+' attempts</span></div><strong class="sm" style="text-align:right">'+(m===null?'—':m+'%')+'</strong></div>'}).join('')}
+    function referenceView(){return '<div class="panel"><div class="eyebrow">A handy cheat sheet</div><h2 style="margin:6px 0 9px">The six trig rules</h2><p class="muted sm" style="margin-bottom:17px">The derivatives and their exact reverse antiderivatives. No logarithmic trig integrals in this set—those are a different collection.</p><div class="reference-grid">'+RULES.map(r=>{const d=makeQ('d-'+r.id),a=makeQ('a-'+r.id);return '<div class="reference-card"><strong>'+r.name+'</strong><div class="tiny muted" style="margin-top:9px">Derivative</div><div style="margin:8px 0 16px">'+fullEquation(d)+'</div><div class="tiny muted">Reverse antiderivative</div><div style="margin:8px 0 12px">'+fullEquation(a)+'</div><p class="muted tiny">'+r.tip+'</p></div>'}).join('')+'</div><div class="notice" style="margin-top:17px">Memory trick: cosine, cotangent, and cosecant have negative derivatives. And don’t forget <em>+ C</em> when integrating.</div></div>'}
+    function settingsView(){return '<div class="row-between"><div><div class="eyebrow">Make it yours</div><h1 style="font-size:34px;margin:5px 0">Settings</h1></div>'+button('← Back','settings-back','ghost small')+'</div><nav class="tabs" aria-label="Settings sections">'+[['appearance','Appearance'],['study','Study'],['data','Progress & data'],['about','About']].map(([id,l])=>'<button class="tab '+(ui.settingsTab===id?'active':'')+'" data-action="settings-tab" data-value="'+id+'">'+l+'</button>').join('')+'</nav><div class="panel">'+(ui.settingsTab==='appearance'?appearance():ui.settingsTab==='study'?studySettings():ui.settingsTab==='data'?dataSettings():about())+'</div>'}
+    function appearance(){return '<h2>Color your world</h2><p class="muted sm" style="margin:8px 0 18px">Go classic, go colorful, or invent your own. The equations will remain readable, promise.</p>'+selector('Appearance',[['light','Light ☀'],['dark','Dark ☾']],data.theme.mode,'theme-mode')+'<h3 style="margin:22px 0 12px">Ready-made palettes</h3><div class="palette-grid">'+Object.entries(PALETTES).map(([k,v])=>'<button class="palette-btn '+(data.theme.palette===k?'selected':'')+'" data-action="palette" data-value="'+k+'"><span class="swatches">'+v.map(c=>'<span style="background:'+c+'"></span>').join('')+'</span><span class="sm strong">'+({pop:'Retro Pop',candy:'Cotton Candy',ocean:'Ocean',sunset:'Sunset',violet:'Violet',lime:'Fresh'}[k])+'</span></button>').join('')+'</div><h3 style="margin:22px 0 9px">Pick your own colors</h3>'+['Primary','Secondary','Accent'].map((label,i)=>'<label class="color-row"><span class="sm strong">'+label+'</span><input type="color" data-color="'+i+'" value="'+data.theme.colors[i]+'" aria-label="'+label+' color"></label>').join('')+'<div class="row" style="margin-top:15px">'+button('✦ Surprise me','surprise','secondary')+button('Reset colors','reset-palette','ghost')+'</div><p class="muted tiny" style="margin-top:13px">Colors save automatically. Text colors adjust for contrast.</p>'}
+    function studySettings(){return '<h2>Study preferences</h2><p class="muted sm" style="margin:7px 0 19px">The important decisions. Like whether your website gets to be a little sarcastic.</p>'+selector('Default practice mix',[['smart','Smart mix'],['balanced','Even mix'],['weak','Weak spots']],data.prefs.selection,'selection')+'<label class="checkchip" style="margin-top:19px"><input type="checkbox" data-setting="playful" '+(data.prefs.playful?'checked':'')+'> Playful feedback messages</label><p class="muted tiny" style="margin-top:11px">Even with humor turned on, explanations stay helpful. We roast the negative signs, not the learner.</p>'}
+    function dataSettings(){return '<h2>Progress & data</h2><p class="muted sm" style="margin:9px 0 17px">Your scores and mastery are saved automatically in this browser on this device. They will <strong>not</strong> sync to your phone, another computer, or a different browser. Clearing browser website data may erase them.</p><div class="notice">'+(storageOK?'✓ Local saving is available in this browser.':'⚠ Local saving seems unavailable. Your progress may not persist after closing this page.')+'</div><div class="row" style="margin-top:18px">'+button('↓ Export backup','export','secondary')+button('↑ Import backup','import','ghost')+'</div><p class="muted tiny" style="margin:10px 0 23px">Export creates a JSON backup. Import replaces the progress and preferences currently saved here.</p><div style="border-top:1px solid var(--line);padding-top:19px"><h3>Start fresh</h3><p class="muted sm" style="margin:7px 0 12px">Reset scores and mastery while keeping your colors and study preferences.</p>'+button('Reset all progress','reset-progress','ghost small')+'</div>'}
+    function about(){return '<div class="eyebrow">About this little corner of math</div><h2 style="margin:7px 0 10px">Math Practice</h2><p class="muted" style="max-width:650px">A fun, low-pressure place to practice math one question at a time. Starting with the six basic trig derivatives and their reverse antiderivatives, and built to make room for more topics later.</p><h3 style="margin:22px 0 8px">What it does</h3><p class="muted sm">Practice with flashcards, quick choices, formula building, matching, and error spotting. Take optional quizzes, customize your colors, and let Smart Mix revisit the things you haven’t quite mastered yet.</p><p class="muted tiny" style="margin-top:34px;padding-top:15px;border-top:1px solid var(--line)">Designed by Dr. Katie Pridemore with development assistance from ChatGPT (OpenAI).</p>'}
+    function render(){applyTheme();$('app').innerHTML='<div class="shell">'+header()+(ui.notice?'<div class="notice" role="alert" style="margin-bottom:15px">'+ui.notice+'</div>':'')+(ui.screen==='home'?home():ui.screen==='settings'?settingsView():moduleView())+footer()+'</div>'}
+    function resetQuestion(){ui.playing=false;ui.quiz=null;ui.quizFinished=false;ui.notice=''}
+    function gotoTab(tab){ui.screen='module';ui.tab=tab;ui.playing=false;ui.quiz=null;ui.quizFinished=false;ui.notice='';render()}
+    function action(a,v){ui.notice='';switch(a){
+      case 'home':ui.screen='home';resetQuestion();break;
+      case 'open-module':ui.screen='module';ui.tab='practice';ui.playing=false;break;
+      case 'go-progress':gotoTab('progress');return;
+      case 'settings':ui.previousScreen=ui.screen;ui.screen='settings';ui.settingsTab='appearance';break;
+      case 'about':ui.previousScreen=ui.screen;ui.screen='settings';ui.settingsTab='about';break;
+      case 'settings-back':ui.screen=ui.previousScreen==='settings'?'home':(ui.previousScreen||'home');break;
+      case 'settings-tab':ui.settingsTab=v;break;
+      case 'theme-toggle':data.theme.mode=data.theme.mode==='light'?'dark':'light';save();break;
+      case 'theme-mode':data.theme.mode=v;save();break;
+      case 'palette':data.theme.palette=v;data.theme.colors=[...PALETTES[v]];save();break;
+      case 'surprise':{const options=Object.keys(PALETTES).filter(k=>k!==data.theme.palette);const k=choice(options);data.theme.palette=k;data.theme.colors=[...PALETTES[k]];save();break}
+      case 'reset-palette':data.theme.palette='pop';data.theme.colors=[...PALETTES.pop];save();break;
+      case 'tab':gotoTab(v);return;
+      case 'operation':data.prefs.operation=v;save();break;
+      case 'selection':data.prefs.selection=v;save();break;
+      case 'select-all':data.prefs.functions=data.prefs.functions.length===6?[]:[...NAMES];save();break;
+      case 'start-game':startGame(v);return;
+      case 'back-activities':ui.playing=false;break;
+      case 'hint':ui.hint=true;break;
+      case 'next':nextGameQuestion();return;
+      case 'mc-answer':{if(ui.selected!==null)return;const i=Number(v),got=ui.options[i],ok=tokensKey(got)===tokensKey(ui.question.tokens);ui.selected=i;record(ui.question.id,ok,ui.hint);ui.feedback={ok,title:cheerful(ok),detail:ok?(ui.hint?'Correct—with a little help. That counts as learning!':ui.question.rule.tip):ui.question.rule.tip,showAnswer:!ok};break}
+      case 'flash-reveal':ui.flashRevealed=true;break;
+      case 'flash-know':record(ui.question.id,true);nextGameQuestion();return;
+      case 'flash-again':record(ui.question.id,false);nextGameQuestion();return;
+      case 'build-add':if(ui.build.length<8)ui.build.push(v);ui.feedback=null;break;
+      case 'build-undo':ui.build.pop();ui.feedback=null;break;
+      case 'build-clear':ui.build=[];ui.feedback=null;break;
+      case 'build-check':{if(!ui.build.length)return;const ok=tokensKey(ui.build)===tokensKey(ui.question.tokens);if(!ui.firstAttempt){record(ui.question.id,ok,ui.hint);ui.firstAttempt=true}ui.feedback={ok,title:ok?cheerful(true):cheerful(false),detail:ok?'Formula assembled! '+ui.question.rule.tip:'Not quite. Check the sign, squared functions, and + C. You can adjust your tiles and try again.',showAnswer:!ok};break}
+      case 'glitch-verdict':{const g=ui.glitch;const ok=(v==='right')===g.isRight;if(!ok){record(ui.question.id,false);g.step=3;ui.feedback={ok:false,title:'Sneaky one!',detail:ui.question.rule.tip,showAnswer:true}}else if(g.isRight){record(ui.question.id,true);g.step=3;ui.feedback={ok:true,title:cheerful(true),detail:ui.question.rule.tip}}else g.step=2;break}
+      case 'glitch-fix':{const g=ui.glitch,ok=tokensKey(g.options[Number(v)])===tokensKey(ui.question.tokens);record(ui.question.id,ok);g.step=3;ui.feedback={ok,title:cheerful(ok),detail:ui.question.rule.tip,showAnswer:!ok};break}
+      case 'match-new':startMatch();return;
+      case 'match-card':{const m=ui.match,i=Number(v),c=m.cards[i];if(m.waiting||m.open.includes(i)||m.found.includes(c.id))return;m.open.push(i);if(m.open.length===2){m.moves++;const c1=m.cards[m.open[0]],c2=m.cards[m.open[1]];if(c1.id===c2.id){const good=!m.misses.includes(c1.id);record(c1.id,good);m.found.push(c1.id);m.open=[];m.complete=m.found.length===m.cards.length/2}else{m.misses.push(c1.id,c2.id);m.waiting=true;render();setTimeout(()=>{m.open=[];m.waiting=false;render()},730);return}}break}
+      case 'quiz-length':ui.quizLength=Number(v);break;
+      case 'quiz-format':ui.quizFormat=v;break;
+      case 'quiz-selection':ui.quizSelection=v;break;
+      case 'quiz-start':startQuiz();return;
+      case 'quiz-mc':quizAnswer(ui.options[Number(v)]);return;
+      case 'quiz-build':if(ui.build.length)quizAnswer(ui.build);return;
+      case 'quiz-exit':if(confirm('Leave this quiz? Your unfinished quiz will be discarded.')){ui.quiz=null;ui.quizFinished=false}break;
+      case 'quiz-review-toggle':{const el=$('quiz-review');if(el)el.classList.toggle('hide');return}
+      case 'quiz-reset':ui.quiz=null;ui.quizFinished=false;break;
+      case 'export':exportData();return;
+      case 'import':$('import-file').click();return;
+      case 'reset-progress':if(confirm('Erase all saved scores, quiz results, and mastery progress? This cannot be undone unless you exported a backup.')){const fresh=defaultData();data.skills=fresh.skills;data.total=fresh.total;data.today=fresh.today;data.quizHistory=[];save();ui.notice='Progress reset. Fresh start!'}break;
+      default:return;
+    }render()}
+    function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='math-practice-backup-'+dayKey()+'.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+    document.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(el){e.preventDefault();action(el.dataset.action,el.dataset.value)}});
+    document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.brand')){e.preventDefault();action('home')}});
+    document.addEventListener('change',e=>{const el=e.target;if(el.dataset.function){let set=new Set(data.prefs.functions);if(el.checked)set.add(el.dataset.function);else set.delete(el.dataset.function);data.prefs.functions=NAMES.filter(n=>set.has(n));save();render()}if(el.dataset.setting==='playful'){data.prefs.playful=el.checked;save();render()}if(el.dataset.color!==undefined){data.theme.colors[Number(el.dataset.color)]=el.value;data.theme.palette='custom';save();render()}});
+    document.addEventListener('input',e=>{const el=e.target;if(el.dataset.color!==undefined){data.theme.colors[Number(el.dataset.color)]=el.value;data.theme.palette='custom';save();applyTheme()}});
+    $('import-file').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{if(file.size>1024*1024)throw Error('Backup is too large.');const parsed=JSON.parse(await file.text());if(parsed?.version!==1||!parsed.skills||!parsed.total||!parsed.theme)throw Error('This does not look like a Math Practice backup.');if(!confirm('Replace current progress and preferences with this backup?'))return;data=mergeStored(parsed);save();today();resetQuestion();ui.screen='settings';ui.settingsTab='data';ui.notice='Backup imported successfully.';render()}catch(err){alert('Unable to import: '+err.message)}finally{e.target.value=''}});
+    render();
+  })();
+  </script>
+</body>
+</html>
